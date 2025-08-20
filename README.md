@@ -1,12 +1,11 @@
 # Redektör ✉️🤖
 
-## Bu Otomasyon Hakkında
-**Redektör**, iş veya staj başvurusu sürecini sizin için kolaylaştıran bir **n8n otomasyonudur**. Gelen kutunuzdaki ilgili mailleri otomatik olarak tanır, sonucunu analiz eder ve size eğlenceli bildirimler gönderir. Bu sayede, sürekli mail kontrol etme derdinden kurtulur ve önemli gelişmeleri anında öğrenirsiniz.
-
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="600"/>
+  <img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="800"/>
 </p>
 
+## Bu Otomasyon Hakkında
+**Redektör**, iş veya staj başvurusu sürecini sizin için kolaylaştıran bir **n8n otomasyonudur**. Gelen kutunuzdaki ilgili mailleri otomatik olarak tanır, sonucunu analiz eder ve size eğlenceli bildirimler gönderir. Bu sayede, sürekli mail kontrol etme derdinden kurtulur ve önemli gelişmeleri anında öğrenirsiniz.
 
 ---
 

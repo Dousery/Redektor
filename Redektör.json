@@ -1,0 +1,401 @@
+{
+  "name": "Redektör",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -176,
+        64
+      ],
+      "id": "41e77e52-edab-44ce-82a6-6b9fe82f9390",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "YOUR_GMAIL_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        272
+      ],
+      "id": "0a7788e9-3dd0-4614-8332-0ae2b385042a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_GEMINI_API_CREDENTIAL_ID",
+          "name": "YOUR_GEMINI_API_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Subject }}{{ $json.snippet }}",
+        "options": {
+          "systemMessage": "=Sen bir e-posta yanıt sınıflandırma asistanısın. Sana bir iş veya staj başvurusuna gelen resmi e-posta verilecek. Görevin, bu e-postanın başvuru sonucunu anlamak ve kullanıcıya eğlenceli bir şekilde özetlemektir.\n\nKurallar:\n1. E-postayı dikkatlice oku.\n2. Önce şirketin adını yaz (örn: \"Google:\" veya \"Mercedes-Benz:\").\n3. Eğer e-posta başvurunun kabul edildiğini söylüyorsa, kullanıcıya neşeli, motive edici, kutlama havasında bir mesaj ver. 🎉\n4. Eğer e-posta başvurunun reddedildiğini söylüyorsa, kullanıcıya moral verici ama esprili ve hafif eğlenceli bir mesaj ver. Şirketi karalama sakın.\n5. Yanıt kısa, samimi ve eğlenceli olsun. Çok resmi yazma.\n6. Ek açıklama, analiz veya \"bu bir yapay zekâ tahminidir\" gibi notlar ekleme. Sadece sonuç mesajını ver."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        48
+      ],
+      "id": "a8339d50-bce5-447c-881d-73075848d9be",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        336,
+        272
+      ],
+      "id": "b81698ab-ba3a-4f05-9b53-16e75b7b143d",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_GEMINI_API_CREDENTIAL_ID",
+          "name": "YOUR_GEMINI_API_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        992,
+        256
+      ],
+      "id": "bc8c67e9-315e-46bb-b3e2-49e1d22694b6",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_GEMINI_API_CREDENTIAL_ID",
+          "name": "YOUR_GEMINI_API_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.Subject }}{{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "POSITIVE",
+              "description": "The email is related to a job or internship opportunity, such as a job offer, internship announcement, application response, recruitment event, or any career-related communication."
+            },
+            {
+              "category": "NEGATIVE",
+              "description": "The email is not related to jobs or internships, for example promotions, newsletters, advertisements, invoices, personal messages, or spam."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "\"You are an email classification assistant. You will receive the full content of an email. If the email is related to a job or internship opportunity (such as a job offer, internship announcement, application response, or career event), output only 'POSITIVE'. If the email is not related to jobs or internships (for example promotions, newsletters, invoices, spam), output only 'NEGATIVE'. Do not add explanations, only return 'POSITIVE' or 'NEGATIVE'\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        64,
+        64
+      ],
+      "id": "3b610245-dfe9-4b5f-bf16-4d38f7361523",
+      "name": "İş veya Staj mı?",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc2cba11-9c57-4f87-89f3-419080b1dd35",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        48
+      ],
+      "id": "f7128555-7f0d-4c8c-8f4b-8c28b84edfd2",
+      "name": "Notification Metni"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "YOUR_REJECTION_LABEL_ID"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1456,
+        192
+      ],
+      "id": "22ca8ec0-9181-488a-bc03-202cb0593115",
+      "name": "Ret tagine ekle",
+      "webhookId": "YOUR_WEBHOOK_ID_FOR_REJECTION",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "YOUR_GMAIL_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "YOUR_PUSHOVER_USER_KEY",
+        "message": "={{ $('Notification Metni').item.json.output }}",
+        "priority": 0,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        64
+      ],
+      "id": "61c8c4a6-6e08-4729-916f-593f9622446b",
+      "name": "Notification Yolla",
+      "credentials": {
+        "pushoverApi": {
+          "id": "YOUR_PUSHOVER_CREDENTIAL_ID",
+          "name": "YOUR_PUSHOVER_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "YOUR_ACCEPTANCE_LABEL_ID"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1456,
+        -32
+      ],
+      "id": "c22269ed-0d1e-425a-8c9a-9d916928e09e",
+      "name": "Kabul tagine ekle",
+      "webhookId": "YOUR_WEBHOOK_ID_FOR_ACCEPTANCE",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "YOUR_GMAIL_CREDENTIAL_NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.output }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "kabul",
+              "description": "Mailin kabul maili olduğunu belirtmektedir."
+            },
+            {
+              "category": "ret",
+              "description": "Mailin ret maili olduğunu belirtmektedir."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Sen bir e-posta sınıflandırıcısın. \nSana iş veya staj başvurusu sonucu içeren resmi bir e-posta verilecek. \nSadece şu çıktılardan birini döndür: \n- \"kabul\" (eğer başvuru olumlu sonuçlandıysa) \n- \"ret\" (eğer başvuru olumsuz sonuçlandıysa) \n\nE-posta içeriği: \n{{ $json.output }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        48
+      ],
+      "id": "b47ef378-968c-4421-99fb-3bfa98ed7411",
+      "name": "Kabul mü Ret mi?"
+    },
+    {
+      "parameters": {
+        "content": "# Redektör ✉️🤖\n\n### Maillerinizi otomatik olarak kontrol eder, iş veya staj ile ilgili olanları tespit eder. Başvurunuzun olumlu mu olumsuz mu sonuçlandığını belirler, sonucu web/mobil üzerinden anında bildirim gönderir ve maillerinizi ilgili klasörlere (ret/kabul) otomatik olarak taşır. \n",
+        "height": 224,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "5df4127e-c870-4322-b855-a354810e888b",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "İş veya Staj mı?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "İş veya Staj mı?",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Notification Metni",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Kabul mü Ret mi?",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "İş veya Staj mı?": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notification Metni": {
+      "main": [
+        [
+          {
+            "node": "Kabul mü Ret mi?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ret tagine ekle": {
+      "main": [
+        [
+          {
+            "node": "Notification Yolla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kabul tagine ekle": {
+      "main": [
+        [
+          {
+            "node": "Notification Yolla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kabul mü Ret mi?": {
+      "main": [
+        [
+          {
+            "node": "Kabul tagine ekle",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ret tagine ekle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "TEMPLATE_VERSION_ID",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "TEMPLATE_INSTANCE_ID"
+  },
+  "id": "TEMPLATE_ID",
+  "tags": []
+}

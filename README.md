@@ -1,14 +1,16 @@
-<p align="center">
+<div align="center">
   <table>
     <tr>
-      <td><img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="200"/></td>
-      <td>
+      <td style="border: none; padding-right: 20px;">
+        <img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="350"/>
+      </td>
+      <td style="border: none; text-align: left;">
         <h2>Redektör ✉️🤖</h2>
         <p><i>Akıllı mail asistanınız</i></p>
       </td>
     </tr>
   </table>
-</p>
+</div>
 
 ## Otomasyon Hakkında
 **Redektör**, iş veya staj başvurusu sürecini sizin için kolaylaştıran bir **n8n otomasyonudur**. Gelen kutunuzdaki ilgili mailleri otomatik olarak tanır, sonucunu analiz eder ve size eğlenceli bildirimler gönderir. Bu sayede, sürekli mail kontrol etme derdinden kurtulur ve önemli gelişmeleri anında öğrenirsiniz.

@@ -23,6 +23,9 @@
 - Sonucu **web/mobil üzerinden** anında bildirim olarak gönderir.
 - Maillerinizi ilgili klasörlere (**Ret / Kabul**) otomatik olarak taşır.
 
+  ![WhatsApp Görsel 2025-08-20 saat 12 16 19_f213fe78](https://github.com/user-attachments/assets/430f6918-fdb7-48d8-a46a-c1f66f50c447)
+
+
 ---
 
 ## Kurulum
@@ -34,7 +37,7 @@ Redektör'ü kullanmaya başlamak için aşağıdaki adımları takip edin:
 3. **Pushover Kullanıcı Anahtarını Güncelleyin:**  
    `Notification Yolla` düğümünün **parameters** bölümündeki `userKey` değerini kendi Pushover kullanıcı anahtarınızla değiştirin.
 4. **Gmail Etiket ID'lerini Girin:**  
-   Gmail hesabınızda "Kabul" ve "Ret" etiketlerini oluşturun. Daha sonra bu etiketlerin ID'lerini bulup, `Kabul tagine ekle` ve `Ret tagine ekle` düğümlerindeki `labelIds` bölümüne yapıştırın.
+   Gmail hesabınızda "kabul" ve "ret" etiketlerini oluşturun. Daha sonra bu etiketlerin ID'lerini bulup, `Kabul tagine ekle` ve `Ret tagine ekle` düğümlerindeki `labelIds` bölümüne yapıştırın.
 
 ---
 

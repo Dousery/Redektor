@@ -12,6 +12,8 @@
   </table>
 </div>
 
+---
+
 ## Otomasyon Hakkında
 **Redektör**, iş veya staj başvurusu sürecini sizin için kolaylaştıran bir **n8n otomasyonudur**. Gelen kutunuzdaki ilgili mailleri otomatik olarak tanır, sonucunu analiz eder ve size eğlenceli bildirimler gönderir. Bu sayede, sürekli mail kontrol etme derdinden kurtulur ve önemli gelişmeleri anında öğrenirsiniz.
 

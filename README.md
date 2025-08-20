@@ -1,5 +1,13 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="850"/>
+  <table>
+    <tr>
+      <td><img src="https://github.com/user-attachments/assets/33f8bf94-5a46-4560-8a0a-b18add2bfbac" alt="Redektör Logo" width="200"/></td>
+      <td>
+        <h2>Redektör ✉️🤖</h2>
+        <p><i>Akıllı mail asistanınız</i></p>
+      </td>
+    </tr>
+  </table>
 </p>
 
 ## Otomasyon Hakkında
